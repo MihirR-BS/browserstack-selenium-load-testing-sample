@@ -9,7 +9,7 @@
 1. **Clone the repository**
 
    ```sh
-   git clone https://github.com/YOUR_USERNAME/testng-browserstack.git
+   git clone https://github.com/browserstack/browserstack-playwright-load-testing-sample.git
    cd testng-browserstack
    ```
 
