@@ -20,10 +20,10 @@ testName: Default Test
 # ======================
 # The following parameters are used to set load configuration for your test:
 # Set 'testType' to the type of load test that you want to execute. Example:'Playwright', 'Selenium'. This is a required parameter. 
-testType: Playwright
+testType: Selenium
 
 # Set 'vus' to the maximum number of virtual users to simulate during the test.  
-vus: 5
+vus: 1
 
 # Set multiple regions from which you would want to generate the load (percent should total 100 across all loadzones). 
 regions:
@@ -31,7 +31,7 @@ regions:
     percent: 100 
 
 # Set language to the programming language used in your project. Example: 'java', 'nodejs'.
-language: nodejs
+language: java
 
 # Set framework to the test framework used in your Selenium project. Example: 'testng'.
 # framework: testng

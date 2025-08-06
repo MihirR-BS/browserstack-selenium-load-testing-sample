@@ -71,47 +71,64 @@ public class SimpleTest {
             throw e;
         }
     }
-    
+
     @Test
-    public void testGoogleSearch() {
-        // Go to Google
-        driver.get("https://www.google.com");
-        
-        // Wait for 2 minutes
-        try {
-            Thread.sleep(120000); // 2 minutes = 120,000 milliseconds
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        
-        // Verify page title
-        Assert.assertTrue(driver.getTitle().contains("Google"));
-        
-        // Find search box and search
-        WebElement searchBox = driver.findElement(By.name("q"));
-        searchBox.sendKeys("Selenium WebDriver");
-        searchBox.submit();
-        
-        // Wait and verify results
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        Assert.assertTrue(driver.getTitle().contains("Selenium WebDriver"));
-        
-        System.out.println("Test passed: Google search working!");
+    public void testAddToCartBStackDemo() {
+        // Visit BStackDemo
+        driver.get("https://bstackdemo.com/");
+
+        // Get name of product to add to cart (first product)
+        WebElement productNameElem = driver.findElement(By.cssSelector("#\\33  > p"));
+        String productToAdd = productNameElem.getText();
+
+        // Click on add to cart
+        WebElement addToCartBtn = driver.findElement(By.cssSelector("#\\33 > .shelf-item__buy-btn"));
+        addToCartBtn.click();
+
+        // Get name of item in cart
+        WebElement productInCartElem = driver.findElement(By.cssSelector("#__next > div > div > div.float-cart.float-cart--open > div.float-cart__content > div.float-cart__shelf-container > div > div.shelf-item__details > p.title"));
+        String productInCart = productInCartElem.getText();
+
+        // Check if product in cart is same as one added
+        Assert.assertEquals(productInCart, productToAdd);
+        System.out.println("Test passed: Add to cart works!");
     }
-    
+
     @Test
-    public void testGitHub() {
-        // Go to GitHub
-        driver.get("https://github.com");
-        
-        // Verify page loaded
-        Assert.assertTrue(driver.getTitle().contains("GitHub"));
-        
-        // Check sign-in link exists
-        WebElement signInLink = driver.findElement(By.linkText("Sign in"));
-        Assert.assertTrue(signInLink.isDisplayed());
-        
-        System.out.println("Test passed: GitHub page loaded correctly!");
+    public void testCheckoutFlowBStackDemo() {
+        // Visit BStackDemo
+        driver.get("https://bstackdemo.com/");
+
+        // Sign in
+        driver.findElement(By.id("signin")).click();
+        driver.findElement(By.cssSelector("#username svg")).click();
+        driver.findElement(By.id("react-select-2-option-0-0")).click();
+        driver.findElement(By.cssSelector("#password svg")).click();
+        driver.findElement(By.id("react-select-3-option-0-0")).click();
+        driver.findElement(By.id("login-btn")).click();
+
+        // Wait for login
+        try { Thread.sleep(500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+
+        // Click on buy item
+        driver.findElement(By.cssSelector("#\\31 > .shelf-item__buy-btn")).click();
+        driver.findElement(By.cssSelector("div.float-cart__close-btn")).click();
+        driver.findElement(By.cssSelector("#\\32 > .shelf-item__buy-btn")).click();
+        driver.findElement(By.cssSelector(".buy-btn")).click();
+
+        // Add address details
+        driver.findElement(By.id("firstNameInput")).sendKeys("first");
+        driver.findElement(By.id("lastNameInput")).sendKeys("last");
+        driver.findElement(By.id("addressLine1Input")).sendKeys("address");
+        driver.findElement(By.id("provinceInput")).sendKeys("province");
+        driver.findElement(By.id("postCodeInput")).sendKeys("pincode");
+
+        // Checkout
+        driver.findElement(By.id("checkout-shipping-continue")).click();
+        driver.findElement(By.xpath("//*[text()='Continue']")).click();
+        driver.findElement(By.xpath("//*[text()='Orders']")).click();
+
+        System.out.println("Test passed: Checkout flow works!");
     }
     
     @AfterMethod
